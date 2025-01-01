@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LawGPT - Legal AI Assistant</title>
+    <!-- Directly reference style.css -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">LawGPT</div>
+    </header>
+    
+    <main>
+        <div class="container">
+            <h1>Legal Question Answering</h1>
+            <p>Enter your legal question below, and get professional insights powered by AI.</p>
+
+            <textarea id="inputText" placeholder="Ask your legal question here..."></textarea>
+            <button onclick="getPrediction()">Get Prediction</button>
+
+            <div id="result">
+                <h3>Response:</h3>
+                <p id="responseText">Your AI-generated response will appear here.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 LawGPT. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        async function getPrediction() {
+            const text = document.getElementById('inputText').value;
+
+            if (!text) {
+                alert("Please enter a question!");
+                return;
+            }
+
+            const response = await fetch("/predict", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ text: text })
+            });
+
+            const data = await response.json();
+
+            if (data.error) {
+                document.getElementById("responseText").innerText = "Error: " + data.error;
+            } else {
+                document.getElementById("responseText").innerText = "Prediction: " + data.prediction;
+            }
+        }
+    </script>
+</body>
+</html>
