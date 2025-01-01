@@ -7,60 +7,58 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f7f6;
             margin: 0;
             padding: 0;
+            background-color: #f4f7f6;
         }
         header {
-            background-color: #0066cc;
+            background-color: #2c3e50;
             color: white;
             padding: 10px;
             text-align: center;
         }
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            overflow-y: auto;
-            height: 300px;
-        }
-        h1 {
+        .logo {
             font-size: 24px;
-            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        main {
+            padding: 20px;
         }
         textarea {
             width: 100%;
             height: 100px;
             padding: 10px;
+            margin: 10px 0;
             font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            resize: none;
+            border-radius: 5px;
+            border: 1px solid #ddd;
         }
         button {
-            background-color: #0066cc;
+            padding: 10px 20px;
+            background-color: #2980b9;
             color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
             font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
         button:hover {
-            background-color: #005bb5;
+            background-color: #3498db;
         }
         #result {
             margin-top: 20px;
         }
+        #responseText {
+            font-size: 16px;
+            color: #333;
+            margin-top: 10px;
+        }
         footer {
-            background-color: #f1f1f1;
             text-align: center;
             padding: 10px;
-            font-size: 14px;
+            background-color: #2c3e50;
+            color: white;
+            margin-top: 40px;
         }
     </style>
 </head>
@@ -89,58 +87,43 @@
     </footer>
 
     <script>
-        const apiKey = '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';  // Replace with your API key securely
-
         async function getPrediction() {
-            const inputText = document.getElementById("inputText").value.trim();
-            const responseText = document.getElementById("responseText");
-            responseText.innerText = ""; // Clear previous response
+            const text = document.getElementById('inputText').value;
 
-            if (!inputText) {
-                alert("Please enter a legal question!");
+            if (!text) {
+                alert("Please enter a question!");
                 return;
             }
 
             try {
-                const response = await fetch("https://api.openai.com/v1/chat/completions", {
-                    method: "POST",
+                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                    method: 'POST',
                     headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${apiKey}`,
+                        'Authorization': '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',  // Replace with your actual API key
+                        'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        model: "gpt-3.5-turbo",
-                        messages: [{ role: "user", content: inputText }],
-                        max_tokens: 200,
-                    }),
+                        model: 'gpt-3.5-turbo',
+                        messages: [
+                            {
+                                role: 'user',
+                                content: text
+                            }
+                        ],
+                        max_tokens: 200
+                    })
                 });
 
-                if (!response.ok) {
-                    throw new Error(`Error: ${response.status} - ${response.statusText}`);
-                }
-
                 const data = await response.json();
-                if (data.choices && data.choices[0].message) {
-                    typeEffect(responseText, data.choices[0].message.content);
+
+                if (data.choices && data.choices[0] && data.choices[0].message) {
+                    document.getElementById('responseText').innerText = data.choices[0].message.content;
                 } else {
-                    responseText.innerText = "Error: Unable to fetch response from API.";
+                    document.getElementById('responseText').innerText = "Error: Unable to get a response.";
                 }
             } catch (error) {
-                responseText.innerText = `Error: ${error.message}. Please try again.`;
+                document.getElementById('responseText').innerText = "Error: Unable to fetch prediction. Please try again.";
             }
-        }
-
-        function typeEffect(element, text, speed = 50) {
-            let i = 0;
-            function typeChar() {
-                if (i < text.length) {
-                    element.innerText += text.charAt(i);
-                    i++;
-                    element.scrollTop = element.scrollHeight; // Scroll to bottom
-                    setTimeout(typeChar, speed);
-                }
-            }
-            typeChar();
         }
     </script>
 </body>
