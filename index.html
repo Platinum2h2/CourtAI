@@ -91,7 +91,6 @@
     <script>
         const apiKey = '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';  // Use this temporarily, securely handle it server-side in production
 
-        // Function to get response from GPT-3.5 Turbo API
         async function getPrediction() {
             const inputText = document.getElementById("inputText").value.trim();
             const responseText = document.getElementById("responseText");
@@ -116,18 +115,21 @@
                     }),
                 });
 
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.status} - ${response.statusText}`);
+                }
+
                 const data = await response.json();
                 if (data.choices && data.choices[0].message) {
                     typeEffect(responseText, data.choices[0].message.content);
                 } else {
-                    responseText.innerText = "Error: Unable to fetch response. Please try again.";
+                    responseText.innerText = "Error: Unable to fetch response from API.";
                 }
             } catch (error) {
-                responseText.innerText = "Error: Unable to fetch prediction. Please try again.";
+                responseText.innerText = `Error: ${error.message}. Please try again.`;
             }
         }
 
-        // Typing effect function
         function typeEffect(element, text, speed = 50) {
             let i = 0;
             function typeChar() {
