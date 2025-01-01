@@ -4,8 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LawGPT - Legal AI Assistant</title>
-    <!-- Directly reference style.css -->
     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 16px;
+            resize: none;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        #responseText {
+            white-space: pre-wrap;
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -22,7 +59,7 @@
 
             <div id="result">
                 <h3>Response:</h3>
-                <p id="responseText">Your AI-generated response will appear here.</p>
+                <div id="responseText">Your AI-generated response will appear here.</div>
             </div>
         </div>
     </main>
@@ -40,21 +77,41 @@
                 return;
             }
 
-            const response = await fetch("/predict", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ text: text })
-            });
+            const responseText = document.getElementById("responseText");
+            responseText.innerText = ""; // Clear previous response
 
-            const data = await response.json();
+            try {
+                const response = await fetch("/predict", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ text: text })
+                });
 
-            if (data.error) {
-                document.getElementById("responseText").innerText = "Error: " + data.error;
-            } else {
-                document.getElementById("responseText").innerText = "Prediction: " + data.prediction;
+                const data = await response.json();
+
+                if (data.error) {
+                    typeEffect(responseText, `Error: ${data.error}`);
+                } else {
+                    typeEffect(responseText, `Prediction: ${data.prediction}`);
+                }
+            } catch (error) {
+                typeEffect(responseText, `Error: Unable to fetch prediction.`);
             }
+        }
+
+        function typeEffect(element, text, speed = 50) {
+            let i = 0;
+            function typeChar() {
+                if (i < text.length) {
+                    element.innerText += text.charAt(i);
+                    i++;
+                    element.scrollTop = element.scrollHeight; // Scroll to bottom
+                    setTimeout(typeChar, speed);
+                }
+            }
+            typeChar();
         }
     </script>
 </body>
