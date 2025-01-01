@@ -25,7 +25,7 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             overflow-y: auto;
-            height: 300px; /* Make the container scrollable */
+            height: 300px;
         }
         h1 {
             font-size: 24px;
@@ -89,88 +89,10 @@
     </footer>
 
     <script>
-        const legalResponses = [
-            "In the case of breach of contract, the aggrieved party can seek damages for any loss incurred due to the violation of the agreement. The court may also enforce specific performance or impose injunctions depending on the nature of the contract.",
-            "If you are facing a criminal charge, the possible consequences may include imprisonment, fines, or probation, depending on the severity of the crime. Defendants have the right to a fair trial and to be represented by an attorney.",
-            "In a personal injury claim, you may be entitled to compensation for medical expenses, lost wages, pain, and suffering, as well as any other damages that resulted from the incident, including emotional distress.",
-            "For family law cases, such as divorce, child custody, and alimony, the court will consider the best interests of the children, the financial circumstances of both parties, and other relevant factors in determining fair and just arrangements.",
-            "If you're charged with a DUI (Driving Under the Influence), the consequences can include suspension of your driver's license, fines, mandatory alcohol education programs, and potential jail time, depending on the state laws and any previous offenses.",
-            "Under intellectual property law, patents are granted for inventions that are novel, non-obvious, and useful. A patent holder has exclusive rights to manufacture, use, and sell the invention for a limited time, typically 20 years.",
-            "In employment law, employees are protected from discrimination based on race, gender, religion, disability, and other factors. If you feel you are being discriminated against at work, you can file a complaint with the Equal Employment Opportunity Commission (EEOC).",
-            "In estate law, a will is a legal document that outlines how a person's assets should be distributed after their death. If no will is left, the estate will be distributed according to state laws, typically through a process called intestate succession.",
-            "In the event of a landlord-tenant dispute, both parties have legal rights and obligations. For example, landlords must maintain habitable living conditions, while tenants must pay rent on time and adhere to lease terms.",
-            "In contract law, an agreement is only enforceable if it involves an offer, acceptance, and consideration. Additionally, both parties must have the capacity to contract, and the contract must be for a lawful purpose.",
-            "The Federal Trade Commission (FTC) enforces laws against deceptive and unfair business practices. Businesses are required to ensure that their advertising is truthful, non-misleading, and substantiated.",
-            "For tax law, individuals are required to pay income tax based on their earnings. Tax fraud is a serious offense and can lead to severe penalties, including fines and imprisonment.",
-            "In intellectual property law, copyright protects original works of authorship, such as books, music, and software, giving the creator exclusive rights to their work for a limited time.",
-            "When someone is wrongfully terminated from their job, they may file a claim for wrongful termination. This can occur when an employer fires an employee in violation of labor laws or contractual agreements.",
-            "A breach of fiduciary duty occurs when someone in a position of trust, such as a trustee or corporate officer, acts in a manner that benefits themselves at the expense of the party they are obligated to protect.",
-            "In international law, treaties are agreements between countries that define their rights and obligations in relation to one another. Treaties must be ratified by the respective governments to become legally binding.",
-            "Criminal law in many jurisdictions allows for plea bargaining, a negotiation process in which the defendant agrees to plead guilty to a lesser charge in exchange for a reduced sentence.",
-            "In bankruptcy law, individuals or businesses who are unable to repay their debts can file for bankruptcy. This allows for the discharge of certain debts or the restructuring of debt under court supervision.",
-            "Real estate law governs the purchase, sale, and use of land and property. It includes issues such as zoning, property taxes, leases, and real estate contracts.",
-            "A power of attorney grants one person the legal authority to act on behalf of another in legal or financial matters, especially if the principal becomes incapacitated.",
-            "In tort law, negligence occurs when someone fails to take reasonable care to prevent harm to others. If negligence causes injury, the injured party may be entitled to compensation.",
-            "In criminal defense, a defendant may raise the defense of insanity to argue that they were not responsible for their actions at the time of the crime due to mental illness.",
-            "For patent law, patent infringement occurs when a product or process that is patented is made, used, or sold by someone else without the permission of the patent holder.",
-            "In divorce law, the division of assets and liabilities is typically done equitably. However, the division does not always mean equal; it depends on various factors such as the length of the marriage and the needs of each spouse.",
-            "A prenuptial agreement is a contract entered into by a couple before marriage that outlines how assets and debts will be divided in the event of divorce or separation.",
-            "Consumer protection laws prevent businesses from engaging in unfair trade practices that harm consumers, such as false advertising, unsafe products, and unfair debt collection methods.",
-            "In immigration law, asylum seekers may be granted protection in a foreign country if they can prove they are at risk of persecution in their home country due to factors like race, religion, or political opinion.",
-            "In intellectual property law, trademarks are used to protect distinctive symbols, logos, or words that identify and distinguish goods or services of a particular company from those of others.",
-            "In tort law, defamation occurs when a false statement is made about someone that harms their reputation. Defamation can be classified as either libel (written) or slander (spoken).",
-            "Family law often includes matters related to child support, where a non-custodial parent is required to financially support their children following a divorce or separation.",
-            "A contract may be deemed voidable if one party entered into it under duress, meaning they were coerced or threatened into agreeing to the terms.",
-            "A criminal record can affect an individual's ability to obtain employment, vote, and travel internationally. However, some convictions may be expunged or sealed under certain circumstances.",
-            "A patent holder has the right to exclude others from making, using, or selling the patented invention without their permission. Patent infringement can lead to legal actions for damages.",
-            "Real property taxes are taxes imposed on land and buildings. They are typically assessed by local governments and are used to fund public services such as schools, roads, and emergency services.",
-            "In family law, child custody disputes are common during divorce proceedings. The court typically makes custody decisions based on the best interests of the child, considering factors such as parental fitness and the child's well-being.",
-            "In contract law, a contract can be voided if it involves fraudulent misrepresentation, where one party intentionally provides false information to deceive the other party.",
-            "In civil litigation, a plaintiff is the person who initiates the lawsuit, while the defendant is the person being sued. The plaintiff must prove their case by a preponderance of the evidence.",
-            "In criminal law, the prosecution must prove the defendant's guilt beyond a reasonable doubt. The defendant is presumed innocent until proven guilty.",
-            "In immigration law, a green card holder is a lawful permanent resident of the United States, allowing them to live and work in the country indefinitely.",
-            "A person who is under arrest has the right to remain silent and the right to legal counsel. This is known as the Miranda rights, which must be read to the individual by law enforcement officers.",
-            "In corporate law, a limited liability company (LLC) is a business structure that combines the flexibility of a partnership with the liability protection of a corporation.",
-            "In criminal law, an alibi is a defense used to show that the defendant was not present at the scene of the crime when it occurred.",
-            "In intellectual property law, trade secrets are confidential business information that provides a company with a competitive advantage. They are protected by non-disclosure agreements (NDAs).",
-            "In probate law, the executor of a will is responsible for managing the decedent's estate, ensuring that debts are paid and assets are distributed according to the terms of the will.",
-            "In family law, spousal support, also known as alimony, may be awarded to a spouse after a divorce to help them maintain a reasonable standard of living.",
-            "A will can be contested if a person believes it was made under duress, undue influence, or lacks proper legal formalities.",
-            "In civil rights law, individuals are protected from discrimination in housing, employment, and public accommodations based on race, gender, disability, religion, and other factors.",
-            "The Fair Labor Standards Act (FLSA) sets minimum wage and overtime pay requirements for employees in the United States. Employers must comply with these regulations to avoid penalties.",
-            "In environmental law, companies must comply with regulations designed to protect natural resources and the environment, such as the Clean Water Act and Clean Air Act.",
-            "In criminal law, a plea of guilty means that the defendant admits to committing the crime and accepts the associated punishment, which may include a reduced sentence as part of a plea agreement.",
-            "A corporation is a separate legal entity from its shareholders, which means that shareholders typically cannot be personally liable for the corporation's debts or actions.",
-            "The Family and Medical Leave Act (FMLA) provides eligible employees with up to 12 weeks of unpaid leave per year for specific family and medical reasons, such as the birth of a child or a serious health condition.",
-            "In contract law, the statute of limitations limits the time period during which a party can bring a legal claim. Once the time expires, the claim is typically barred from being brought before the court.",
-            "In criminal law, probation is a sentence that allows a convicted individual to serve their sentence outside of jail under certain conditions, such as regular check-ins with a probation officer.",
-            "In tax law, tax deductions allow individuals or businesses to reduce their taxable income, thereby reducing the amount of tax they owe to the government.",
-            "In tort law, product liability holds manufacturers and sellers responsible for defective products that cause injury or harm to consumers.",
-            "In real estate law, a lease is a contract between a landlord and tenant that outlines the terms of the rental agreement, including rent, duration, and maintenance responsibilities.",
-            "In criminal defense, the insanity defense is used to argue that the defendant was not responsible for their actions at the time of the crime due to mental illness.",
-            "In intellectual property law, a design patent protects the ornamental design of an object, such as the shape or appearance of a product, rather than its function.",
-            "In contract law, a force majeure clause allows parties to be excused from their contractual obligations in the event of unforeseen circumstances, such as natural disasters or pandemics.",
-            "In family law, child support payments are typically determined by a formula based on the non-custodial parent's income and the needs of the child.",
-            "In criminal law, a sentence is the punishment imposed on a defendant found guilty of a crime, which may include prison time, fines, or community service.",
-            "In property law, eminent domain allows the government to take private property for public use, provided that the property owner is compensated at fair market value.",
-            "In corporate law, shareholders of a company are entitled to vote on important company decisions, such as electing the board of directors or approving mergers and acquisitions.",
-            "In environmental law, pollution regulations limit the release of harmful substances into the air, water, and land to protect public health and the environment.",
-            "In contract law, a non-disclosure agreement (NDA) is used to protect confidential information shared between parties during business negotiations or partnerships.",
-            "In family law, a child custody arrangement may be modified if there is a significant change in circumstances, such as one parent moving or a change in the child's needs.",
-            "In tax law, tax evasion is the illegal act of intentionally avoiding the payment of taxes owed, while tax avoidance refers to legally reducing tax liability through planning strategies.",
-            "In intellectual property law, a utility patent protects new and useful inventions, while a design patent protects the visual appearance of an object.",
-            "In tort law, trespass occurs when someone unlawfully enters or interferes with someone else's property without permission.",
-            "In criminal law, a defendant may be found guilty of a crime if the prosecution can prove their guilt beyond a reasonable doubt.",
-            "In contract law, a breach of contract occurs when one party fails to fulfill its obligations as outlined in the agreement, leading to potential legal consequences.",
-            "In intellectual property law, a service mark protects a brand's identity in relation to services, just as a trademark does for products.",
-            "In criminal law, bail is the temporary release of an accused person awaiting trial, typically conditioned on the payment of money as a guarantee of their appearance in court.",
-            "In property law, a deed is a legal document that conveys ownership of real estate from one party to another.",
-            "In contract law, an enforceable contract requires mutual assent, consideration, and the parties' ability to legally enter into the agreement.",
-            "In family law, an adoption allows a person or couple to legally become the parents of a child, transferring parental rights and responsibilities."
-        ];
+        const apiKey = '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';  // Use this temporarily, securely handle it server-side in production
 
-        // Function to generate responses when the button is pressed
-        function getPrediction() {
+        // Function to get response from GPT-3.5 Turbo API
+        async function getPrediction() {
             const inputText = document.getElementById("inputText").value.trim();
             const responseText = document.getElementById("responseText");
             responseText.innerText = ""; // Clear previous response
@@ -180,15 +102,29 @@
                 return;
             }
 
-            // Pick a random response from the legalResponses array
-            const randomResponse = getRandomLegalResponse();
-            typeEffect(responseText, randomResponse);
-        }
+            try {
+                const response = await fetch("https://api.openai.com/v1/chat/completions", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${apiKey}`,
+                    },
+                    body: JSON.stringify({
+                        model: "gpt-3.5-turbo",
+                        messages: [{ role: "user", content: inputText }],
+                        max_tokens: 200,
+                    }),
+                });
 
-        // Function to get a random response from the legalResponses array
-        function getRandomLegalResponse() {
-            const randomIndex = Math.floor(Math.random() * legalResponses.length);
-            return legalResponses[randomIndex];
+                const data = await response.json();
+                if (data.choices && data.choices[0].message) {
+                    typeEffect(responseText, data.choices[0].message.content);
+                } else {
+                    responseText.innerText = "Error: Unable to fetch response. Please try again.";
+                }
+            } catch (error) {
+                responseText.innerText = "Error: Unable to fetch prediction. Please try again.";
+            }
         }
 
         // Typing effect function
