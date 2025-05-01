@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LawGPT - Legal AI Assistant</title>
+    <title>Immigreat - Legal AI Immigration Assistant</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -64,17 +64,25 @@
 </head>
 <body>
     <header>
-        <div class="logo">LawGPT</div>
+        <div class="logo">Immigreat</div>
     </header>
 
     <main>
         <div class="container">
-            <h1>Legal Question Answering</h1>
+            <h1>Immigration Course</h1>
+            <p>Explore this course before asking your question. Use the slideshow below to learn about Canadian immigration law and job opportunities.</p>
+    
+            <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTMfzdbPMhS7MqkkNMSQDeFtcFfDEkF48-WJXd4XRt0qfmWQ0KxfwhXnRxIy_gq-7gkb2iWWLimsmLf/pubembed?start=false&loop=false&delayms=3000" 
+                    frameborder="0" width="100%" height="569" 
+                    allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true">
+            </iframe>
+    
+            <h1 style="margin-top: 40px;">Legal Question Answering</h1>
             <p>Enter your legal question below, and get professional insights powered by AI.</p>
-
+    
             <textarea id="inputText" placeholder="Ask your legal question here..."></textarea>
             <button onclick="getPrediction()">Get Prediction</button>
-
+    
             <div id="result">
                 <h3>Response:</h3>
                 <p id="responseText">Your AI-generated response will appear here.</p>
@@ -83,7 +91,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2024 LawGPT. All Rights Reserved.</p>
+        <p>&copy; 2025 Immigreat. All Rights Reserved.</p>
     </footer>
 
     <script>
@@ -95,11 +103,14 @@
                 return;
             }
 
+            const prompt = `The Immigreat course is a comprehensive guide for newcomers to Canada, covering immigration pathways like Express Entry, PNPs, family sponsorship, and refugee programs. It explains how to apply for visas, work/study permits, and PR, plus key documents and procedures. It also helps immigrants prepare for life in Canada—covering housing, healthcare, job search, workplace rights, cultural norms, and the path to citizenship. Based on this course, answer the following question clearly and simply:\n\n${text}`;
+
+
             try {
                 const response = await fetch('https://api.openai.com/v1/chat/completions', {
                     method: 'POST',
                     headers: {
-                        'Authorization': 'Bear 123API',  // Replace with your actual API key
+                        'Authorization': 'Bearer 123!,  // Replace with your actual API key
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
@@ -107,22 +118,28 @@
                         messages: [
                             {
                                 role: 'user',
-                                content: text
-                            }
-                        ],
-                        max_tokens: 200
-                    })
-                });
+                                content: prompt
+                    }
+                 ],
+                 max_tokens: 4096 // Increased token limit
+                })
+            });
 
-                const data = await response.json();
+                if (response.ok) {
+                    const data = await response.json();
 
-                if (data.choices && data.choices[0] && data.choices[0].message) {
-                    document.getElementById('responseText').innerText = data.choices[0].message.content;
+                    if (data.choices && data.choices[0] && data.choices[0].message) {
+                        document.getElementById('responseText').innerText = data.choices[0].message.content;
+                    } else {
+                        document.getElementById('responseText').innerText = "Error: Unable to get a response.";
+                    }
                 } else {
-                    document.getElementById('responseText').innerText = "Error: Unable to get a response.";
+                    const errorData = await response.json();
+                    document.getElementById('responseText').innerText = `Error: ${errorData.error.message}`;
                 }
             } catch (error) {
                 document.getElementById('responseText').innerText = "Error: Unable to fetch prediction. Please try again.";
+                console.error(error); // For debugging
             }
         }
     </script>
